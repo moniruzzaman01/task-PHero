@@ -1,27 +1,42 @@
 import React from "react";
+import { useQuery } from "react-query";
 
 const BillingTable = () => {
+  const { data, isLoading } = useQuery("billing-list", () =>
+    fetch(`http://localhost:5000/billing-list`).then((res) => res.json())
+  );
+  if (isLoading) {
+    return;
+  }
+  console.log(data);
+
   return (
     <table className=" w-full border-[1px] mt-5 ">
-      <tr className=" border-b-[1px] h-10 ">
-        <th>Billing ID</th>
-        <th>Full Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Paid Amount</th>
-        <th>Action</th>
-      </tr>
-      <tr className=" border-b-[1px] h-8">
-        <td>01</td>
-        <td>shakib</td>
-        <td>shakib@mail.com</td>
-        <td>38742893</td>
-        <td>23000</td>
-        <td>
-          <span className=" cursor-pointer">Edit</span> <span>|</span>{" "}
-          <span className=" cursor-pointer">Delete</span>
-        </td>
-      </tr>
+      <thead>
+        <tr className=" border-b-[1px] h-10 ">
+          <th>Billing ID</th>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Paid Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((list, index) => (
+          <tr key={index} className=" border-b-[1px] h-8">
+            <td>{index + 1}</td>
+            <td>{list.name}</td>
+            <td>{list.email}</td>
+            <td>{list.phone}</td>
+            <td>{list.bill}</td>
+            <td>
+              <span className=" cursor-pointer">Edit</span> <span>|</span>{" "}
+              <span className=" cursor-pointer">Delete</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
     </table>
   );
 };
