@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import BillingTable from "./BillingTable";
-import Modal from "./Modal";
 import Pagination from "./Pagination";
 
 const Billing = () => {

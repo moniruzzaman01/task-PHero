@@ -6,6 +6,18 @@ const BillingTable = ({ modal, setModal }) => {
   const { data, isLoading, refetch } = useQuery("billing-list", () =>
     fetch(`http://localhost:5000/billing-list`).then((res) => res.json())
   );
+  const handleDelete = (id) => {
+    console.log(id);
+    fetch(`http://localhost:5000/delete-billing/${id}`, {
+      method: "get",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged === true) {
+          refetch();
+        }
+      });
+  };
   if (isLoading) {
     return;
   }
@@ -34,7 +46,12 @@ const BillingTable = ({ modal, setModal }) => {
               <td>{list.bill}</td>
               <td>
                 <span className=" cursor-pointer">Edit</span> <span>|</span>{" "}
-                <span className=" cursor-pointer">Delete</span>
+                <span
+                  onClick={() => handleDelete(list._id)}
+                  className=" cursor-pointer"
+                >
+                  Delete
+                </span>
               </td>
             </tr>
           ))}
