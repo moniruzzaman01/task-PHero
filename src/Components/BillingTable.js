@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import EditModal from "./EditModal";
+// import EditModal from "./EditModal";
 import Modal from "./Modal";
 
 const BillingTable = ({ modal, setModal }) => {
-  const [editModal, setEditModal] = useState(false);
+  // const [editModal, setEditModal] = useState(false);
   const [updateData, setUpdateData] = useState({});
   const { data, isLoading, refetch } = useQuery("billing-list", () =>
     fetch(`http://localhost:5000/billing-list`).then((res) => res.json())
@@ -27,14 +27,21 @@ const BillingTable = ({ modal, setModal }) => {
 
   return (
     <>
-      {modal && <Modal refetch={refetch} setModal={setModal} />}
-      {editModal && (
+      {modal && (
+        <Modal
+          setUpdateData={setUpdateData}
+          updateData={updateData}
+          refetch={refetch}
+          setModal={setModal}
+        />
+      )}
+      {/* {editModal && (
         <EditModal
           updateData={updateData}
           refetch={refetch}
           setEditModal={setEditModal}
         />
-      )}
+      )} */}
       <table className=" w-full border-[1px] mt-5 ">
         <thead>
           <tr className=" border-b-[1px] h-10 ">
@@ -58,7 +65,7 @@ const BillingTable = ({ modal, setModal }) => {
                 <span
                   onClick={() => {
                     setUpdateData(list);
-                    setEditModal(true);
+                    setModal(true);
                   }}
                   className=" cursor-pointer"
                 >
