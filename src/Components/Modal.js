@@ -1,6 +1,6 @@
 import React from "react";
 
-const Modal = ({ setModal }) => {
+const Modal = ({ setModal, refetch }) => {
   const handleForm = (event) => {
     event.preventDefault();
 
@@ -21,6 +21,7 @@ const Modal = ({ setModal }) => {
         if (data.acknowledged === true) {
           event.target.reset();
           setModal(false);
+          refetch();
         } else {
           // handle error
         }
