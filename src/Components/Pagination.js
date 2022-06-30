@@ -1,14 +1,15 @@
 import React from "react";
 
-const Pagination = () => {
+const Pagination = ({ totalPage, setPageNumber }) => {
   return (
     <div className=" flex justify-center mt-3">
-      {[...Array(5).keys()].map((number, index) => (
+      {[...Array(totalPage).keys()].map((number, index) => (
         <p
+          onClick={() => setPageNumber(number)}
           key={index}
           className=" bg-gray-400 mr-2 h-6 w-6 rounded cursor-pointer"
         >
-          {number}
+          {number + 1}
         </p>
       ))}
     </div>

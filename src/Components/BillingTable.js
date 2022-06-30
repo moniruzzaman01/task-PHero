@@ -3,11 +3,15 @@ import { useQuery } from "react-query";
 // import EditModal from "./EditModal";
 import Modal from "./Modal";
 
-const BillingTable = ({ modal, setModal }) => {
+const BillingTable = ({ modal, setModal, pageNumber }) => {
   // const [editModal, setEditModal] = useState(false);
   const [updateData, setUpdateData] = useState({});
-  const { data, isLoading, refetch } = useQuery("billing-list", () =>
-    fetch(`http://localhost:5000/billing-list`).then((res) => res.json())
+  const { data, isLoading, refetch } = useQuery(
+    ["billing-list", pageNumber],
+    () =>
+      fetch(`http://localhost:5000/billing-list?pageNumber=${pageNumber}`).then(
+        (res) => res.json()
+      )
   );
   const handleDelete = (id) => {
     console.log(id);
@@ -56,7 +60,7 @@ const BillingTable = ({ modal, setModal }) => {
         <tbody>
           {data.map((list, index) => (
             <tr key={index} className=" border-b-[1px] h-8">
-              <td>{index + 1}</td>
+              <td>{list._id}</td>
               <td>{list.name}</td>
               <td>{list.email}</td>
               <td>{list.phone}</td>
