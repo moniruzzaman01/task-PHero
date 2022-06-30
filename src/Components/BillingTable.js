@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 // import EditModal from "./EditModal";
 import Modal from "./Modal";
 
-const BillingTable = ({ modal, setModal, pageNumber }) => {
+const BillingTable = ({ modal, setModal, pageNumber, searchData }) => {
   // const [editModal, setEditModal] = useState(false);
   const [updateData, setUpdateData] = useState({});
   const { data, isLoading, refetch } = useQuery(
@@ -58,33 +58,38 @@ const BillingTable = ({ modal, setModal, pageNumber }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((list, index) => (
-            <tr key={index} className=" border-b-[1px] h-8">
-              <td>{list._id}</td>
-              <td>{list.name}</td>
-              <td>{list.email}</td>
-              <td>{list.phone}</td>
-              <td>{list.bill}</td>
-              <td>
-                <span
-                  onClick={() => {
-                    setUpdateData(list);
-                    setModal(true);
-                  }}
-                  className=" cursor-pointer"
-                >
-                  Edit
-                </span>{" "}
-                <span>|</span>{" "}
-                <span
-                  onClick={() => handleDelete(list._id)}
-                  className=" cursor-pointer"
-                >
-                  Delete
-                </span>
-              </td>
-            </tr>
-          ))}
+          {data.map(
+            (list, index) =>
+              (list.name.toLowerCase().includes(searchData) ||
+                list.email.includes(searchData) ||
+                list.phone.includes(searchData)) && (
+                <tr key={index} className=" border-b-[1px] h-8">
+                  <td>{list._id}</td>
+                  <td>{list.name}</td>
+                  <td>{list.email}</td>
+                  <td>{list.phone}</td>
+                  <td>{list.bill}</td>
+                  <td>
+                    <span
+                      onClick={() => {
+                        setUpdateData(list);
+                        setModal(true);
+                      }}
+                      className=" cursor-pointer"
+                    >
+                      Edit
+                    </span>{" "}
+                    <span>|</span>{" "}
+                    <span
+                      onClick={() => handleDelete(list._id)}
+                      className=" cursor-pointer"
+                    >
+                      Delete
+                    </span>
+                  </td>
+                </tr>
+              )
+          )}
         </tbody>
       </table>
     </>

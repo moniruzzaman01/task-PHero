@@ -6,6 +6,7 @@ const Billing = () => {
   const [modal, setModal] = useState(false);
   const [totalPage, setTotalPage] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
+  const [searchData, setSearchData] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:5000/numberOfData")
@@ -26,6 +27,7 @@ const Billing = () => {
             className=" border-[1px] border-black "
             type="text"
             placeholder="Search"
+            onKeyUp={(event) => setSearchData(event.target.value.toLowerCase())}
           />
         </div>
         <button
@@ -35,7 +37,12 @@ const Billing = () => {
           Add New Bill
         </button>
       </div>
-      <BillingTable pageNumber={pageNumber} modal={modal} setModal={setModal} />
+      <BillingTable
+        searchData={searchData}
+        pageNumber={pageNumber}
+        modal={modal}
+        setModal={setModal}
+      />
       <Pagination setPageNumber={setPageNumber} totalPage={totalPage} />
     </div>
   );
