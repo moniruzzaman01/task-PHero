@@ -8,7 +8,6 @@ const BillingTable = () => {
   if (isLoading) {
     return;
   }
-  console.log(data);
 
   return (
     <table className=" w-full border-[1px] mt-5 ">
