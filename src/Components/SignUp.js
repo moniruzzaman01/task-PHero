@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const handleForm = (event) => {
     event.preventDefault();
 
@@ -10,7 +13,7 @@ const SignUp = () => {
     console.log(name, email, pass);
     const data = { name, email, pass };
 
-    fetch(`https://red-toque-40345.herokuapp.com/registration`, {
+    fetch(`http://localhost:5000/registration`, {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -19,9 +22,10 @@ const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.acknowledged === true) {
+        if (data.success === true) {
           event.target.reset();
-          console.log(data);
+          localStorage.setItem("accessToken", data.accessToken);
+          navigate("/billing");
         } else {
           // handle error
         }

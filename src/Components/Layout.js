@@ -6,7 +6,7 @@ import Header from "./Header";
 const Layout = () => {
   //
   const { data, isLoading, refetch } = useQuery(["billing-list"], () =>
-    fetch(`https://red-toque-40345.herokuapp.com/paid-total`, {
+    fetch(`http://localhost:5000/paid-total`, {
       headers: {
         "content-type": "application/json",
         authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -18,7 +18,7 @@ const Layout = () => {
   }
   return (
     <div>
-      <Header data={data.total} />
+      <Header data={data?.total} />
       <Billing refetch={refetch} />
     </div>
   );

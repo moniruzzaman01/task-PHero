@@ -11,7 +11,7 @@ const Login = () => {
     const pass = event.target.pass.value;
     const data = { email, pass };
 
-    fetch(`https://red-toque-40345.herokuapp.com/login`, {
+    fetch(`http://localhost:5000/login`, {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -23,7 +23,7 @@ const Login = () => {
         if (data.success === true) {
           event.target.reset();
           localStorage.setItem("accessToken", data.accessToken);
-          navigate("/");
+          navigate("/billing");
         } else {
           // handle error
         }
