@@ -15,15 +15,18 @@ const BillingTable = ({
   const { data, isLoading, refetch } = useQuery(
     ["billing-list", pageNumber],
     () =>
-      fetch(`http://localhost:5000/billing-list?pageNumber=${pageNumber}`, {
-        headers: {
-          "content-type": "application/json",
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }).then((res) => res.json())
+      fetch(
+        `https://red-toque-40345.herokuapp.com/billing-list?pageNumber=${pageNumber}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      ).then((res) => res.json())
   );
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/delete-billing/${id}`, {
+    fetch(`https://red-toque-40345.herokuapp.com/delete-billing/${id}`, {
       method: "post",
       headers: {
         "content-type": "application/json",

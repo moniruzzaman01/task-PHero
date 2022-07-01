@@ -10,7 +10,7 @@ const SignUp = () => {
     console.log(name, email, pass);
     const data = { name, email, pass };
 
-    fetch(`http://localhost:5000/registration`, {
+    fetch(`https://red-toque-40345.herokuapp.com/registration`, {
       method: "post",
       headers: {
         "content-type": "application/json",

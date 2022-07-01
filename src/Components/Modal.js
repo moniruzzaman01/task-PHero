@@ -17,7 +17,7 @@ const Modal = ({
 
     if (event.target?.add?.innerHTML === "Add") {
       const data = { name, email, phone, bill };
-      fetch(`http://localhost:5000/add-billing`, {
+      fetch(`https://red-toque-40345.herokuapp.com/add-billing`, {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -39,14 +39,17 @@ const Modal = ({
     } else if (event.target?.update?.innerHTML === "Update") {
       const data = { name, email, phone, bill };
 
-      fetch(`http://localhost:5000/update-billing/${updateData._id}`, {
-        method: "put",
-        headers: {
-          "content-type": "application/json",
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-        body: JSON.stringify(data),
-      })
+      fetch(
+        `https://red-toque-40345.herokuapp.com/update-billing/${updateData._id}`,
+        {
+          method: "put",
+          headers: {
+            "content-type": "application/json",
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+          body: JSON.stringify(data),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data.acknowledged === true) {

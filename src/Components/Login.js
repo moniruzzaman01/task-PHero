@@ -11,7 +11,7 @@ const Login = () => {
     const pass = event.target.pass.value;
     const data = { email, pass };
 
-    fetch(`http://localhost:5000/login`, {
+    fetch(`https://red-toque-40345.herokuapp.com/login`, {
       method: "post",
       headers: {
         "content-type": "application/json",
