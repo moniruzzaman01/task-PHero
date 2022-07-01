@@ -3,7 +3,13 @@ import { useQuery } from "react-query";
 // import EditModal from "./EditModal";
 import Modal from "./Modal";
 
-const BillingTable = ({ modal, setModal, pageNumber, searchData }) => {
+const BillingTable = ({
+  modal,
+  setModal,
+  pageNumber,
+  searchData,
+  refetch: totalRefetch,
+}) => {
   // const [editModal, setEditModal] = useState(false);
   const [updateData, setUpdateData] = useState({});
   const { data, isLoading, refetch } = useQuery(
@@ -18,11 +24,16 @@ const BillingTable = ({ modal, setModal, pageNumber, searchData }) => {
   );
   const handleDelete = (id) => {
     fetch(`http://localhost:5000/delete-billing/${id}`, {
-      method: "get",
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged === true) {
+          totalRefetch();
           refetch();
         }
       });
@@ -35,6 +46,7 @@ const BillingTable = ({ modal, setModal, pageNumber, searchData }) => {
     <>
       {modal && (
         <Modal
+          totalRefetch={totalRefetch}
           setUpdateData={setUpdateData}
           updateData={updateData}
           refetch={refetch}

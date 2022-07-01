@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import BillingTable from "./BillingTable";
 import Pagination from "./Pagination";
 
-const Billing = () => {
+const Billing = ({ refetch }) => {
   const [modal, setModal] = useState(false);
   const [totalPage, setTotalPage] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
@@ -43,6 +43,7 @@ const Billing = () => {
         </button>
       </div>
       <BillingTable
+        refetch={refetch}
         searchData={searchData}
         pageNumber={pageNumber}
         modal={modal}

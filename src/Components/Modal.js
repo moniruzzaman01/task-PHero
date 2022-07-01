@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
-const Modal = ({ setModal, refetch, updateData, setUpdateData }) => {
+const Modal = ({
+  setModal,
+  refetch,
+  updateData,
+  setUpdateData,
+  totalRefetch,
+}) => {
   const [name, setName] = useState(updateData?.name || "");
   const [email, setEmail] = useState(updateData?.email || "");
   const [phone, setPhone] = useState(updateData?.phone || "");
@@ -15,6 +21,7 @@ const Modal = ({ setModal, refetch, updateData, setUpdateData }) => {
         method: "post",
         headers: {
           "content-type": "application/json",
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
         },
         body: JSON.stringify(data),
       })
@@ -24,6 +31,7 @@ const Modal = ({ setModal, refetch, updateData, setUpdateData }) => {
             event.target.reset();
             setModal(false);
             refetch();
+            totalRefetch();
           } else {
             // handle error
           }
@@ -35,6 +43,7 @@ const Modal = ({ setModal, refetch, updateData, setUpdateData }) => {
         method: "put",
         headers: {
           "content-type": "application/json",
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
         },
         body: JSON.stringify(data),
       })
@@ -44,6 +53,7 @@ const Modal = ({ setModal, refetch, updateData, setUpdateData }) => {
             event.target.reset();
             setModal(false);
             refetch();
+            totalRefetch();
           } else {
             // handle error
           }
