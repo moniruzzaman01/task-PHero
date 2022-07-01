@@ -6,7 +6,6 @@ const Login = () => {
 
     const email = event.target.email.value;
     const pass = event.target.pass.value;
-    console.log(email, pass);
     const data = { email, pass };
 
     fetch(`http://localhost:5000/login`, {
@@ -21,6 +20,7 @@ const Login = () => {
         console.log(data);
         if (data.success === true) {
           event.target.reset();
+          localStorage.setItem("accessToken", data.accessToken);
         } else {
           // handle error
         }
