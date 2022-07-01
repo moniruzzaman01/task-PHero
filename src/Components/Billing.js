@@ -9,7 +9,7 @@ const Billing = ({ refetch }) => {
   const [searchData, setSearchData] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/numberOfData", {
+    fetch("https://red-toque-40345.herokuapp.com/numberOfData", {
       headers: {
         "content-type": "application/json",
         authorization: `bearer ${localStorage.getItem("accessToken")}`,

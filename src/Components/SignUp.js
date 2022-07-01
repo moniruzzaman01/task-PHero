@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const SignUp = () => {
   const [err, setErr] = useState("");
@@ -13,7 +13,7 @@ const SignUp = () => {
     const pass = event.target.pass.value;
     const data = { name, email, pass };
 
-    fetch(`http://localhost:5000/registration`, {
+    fetch(`https://red-toque-40345.herokuapp.com/registration`, {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -58,6 +58,12 @@ const SignUp = () => {
             className=" w-full mb-5 bg-gray-100"
             required
           />
+          <p className=" mb-5 text-left">
+            Have an account?{" "}
+            <Link className=" underline text-blue-500" to="/">
+              Login
+            </Link>{" "}
+          </p>
           {err && (
             <p className=" text-left mb-5 text-red-500 font-bold capitalize">
               {err} !!!
