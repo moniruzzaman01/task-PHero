@@ -1,16 +1,41 @@
 import React from "react";
 
 const SignUp = () => {
+  const handleForm = (event) => {
+    event.preventDefault();
+
+    const name = event.target.name.value;
+    const email = event.target.email.value;
+    const pass = event.target.pass.value;
+    console.log(name, email, pass);
+    const data = { name, email, pass };
+
+    fetch(`http://localhost:5000/registration`, {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged === true) {
+          event.target.reset();
+          console.log(data);
+        } else {
+          // handle error
+        }
+      });
+  };
   return (
     <div className=" min-h-[60vh] flex justify-center items-center ">
       <div className=" w-full">
         <h2 className=" text-3xl mb-10 font-bold">SignUp</h2>
-        <form onSubmit={"handleForm"} action="" className=" w-2/3 mx-auto">
+        <form onSubmit={handleForm} action="" className=" w-2/3 mx-auto">
           <input
             type="text"
             name="name"
             placeholder=" Name"
-            //   onChange={(event) => setEmail(event.target.value)}
             className=" w-full mb-5 bg-gray-100"
             required
           />
@@ -18,7 +43,6 @@ const SignUp = () => {
             type="email"
             name="email"
             placeholder=" Email"
-            //   onChange={(event) => setEmail(event.target.value)}
             className=" w-full mb-5 bg-gray-100"
             required
           />
@@ -26,12 +50,11 @@ const SignUp = () => {
             type="password"
             name="pass"
             placeholder=" Password"
-            // onChange={(event) => setBill(event.target.value)}
             className=" w-full mb-5 bg-gray-100"
             required
           />
           <button name="add" className=" bg-black text-white w-full py-1">
-            Add
+            SignUp
           </button>
         </form>
       </div>
