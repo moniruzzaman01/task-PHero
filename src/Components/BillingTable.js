@@ -9,12 +9,14 @@ const BillingTable = ({ modal, setModal, pageNumber, searchData }) => {
   const { data, isLoading, refetch } = useQuery(
     ["billing-list", pageNumber],
     () =>
-      fetch(`http://localhost:5000/billing-list?pageNumber=${pageNumber}`).then(
-        (res) => res.json()
-      )
+      fetch(`http://localhost:5000/billing-list?pageNumber=${pageNumber}`, {
+        headers: {
+          "content-type": "application/json",
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }).then((res) => res.json())
   );
   const handleDelete = (id) => {
-    console.log(id);
     fetch(`http://localhost:5000/delete-billing/${id}`, {
       method: "get",
     })
@@ -58,38 +60,39 @@ const BillingTable = ({ modal, setModal, pageNumber, searchData }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map(
-            (list, index) =>
-              (list.name.toLowerCase().includes(searchData) ||
-                list.email.includes(searchData) ||
-                list.phone.includes(searchData)) && (
-                <tr key={index} className=" border-b-[1px] h-8">
-                  <td>{list._id}</td>
-                  <td>{list.name}</td>
-                  <td>{list.email}</td>
-                  <td>{list.phone}</td>
-                  <td>{list.bill}</td>
-                  <td>
-                    <span
-                      onClick={() => {
-                        setUpdateData(list);
-                        setModal(true);
-                      }}
-                      className=" cursor-pointer"
-                    >
-                      Edit
-                    </span>{" "}
-                    <span>|</span>{" "}
-                    <span
-                      onClick={() => handleDelete(list._id)}
-                      className=" cursor-pointer"
-                    >
-                      Delete
-                    </span>
-                  </td>
-                </tr>
-              )
-          )}
+          {data &&
+            data.map(
+              (list, index) =>
+                (list.name.toLowerCase().includes(searchData) ||
+                  list.email.includes(searchData) ||
+                  list.phone.includes(searchData)) && (
+                  <tr key={index} className=" border-b-[1px] h-8">
+                    <td>{list._id}</td>
+                    <td>{list.name}</td>
+                    <td>{list.email}</td>
+                    <td>{list.phone}</td>
+                    <td>{list.bill}</td>
+                    <td>
+                      <span
+                        onClick={() => {
+                          setUpdateData(list);
+                          setModal(true);
+                        }}
+                        className=" cursor-pointer"
+                      >
+                        Edit
+                      </span>{" "}
+                      <span>|</span>{" "}
+                      <span
+                        onClick={() => handleDelete(list._id)}
+                        className=" cursor-pointer"
+                      >
+                        Delete
+                      </span>
+                    </td>
+                  </tr>
+                )
+            )}
         </tbody>
       </table>
     </>

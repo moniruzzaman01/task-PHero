@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const handleForm = (event) => {
     event.preventDefault();
 
@@ -17,10 +20,10 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success === true) {
           event.target.reset();
           localStorage.setItem("accessToken", data.accessToken);
+          navigate("/");
         } else {
           // handle error
         }

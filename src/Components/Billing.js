@@ -9,7 +9,12 @@ const Billing = () => {
   const [searchData, setSearchData] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/numberOfData")
+    fetch("http://localhost:5000/numberOfData", {
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         const totalData = data.number;
