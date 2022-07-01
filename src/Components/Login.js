@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [err, setErr] = useState("");
   const navigate = useNavigate();
 
   const handleForm = (event) => {
@@ -25,7 +26,7 @@ const Login = () => {
           localStorage.setItem("accessToken", data.accessToken);
           navigate("/billing");
         } else {
-          // handle error
+          setErr(data.message);
         }
       });
   };
@@ -48,6 +49,11 @@ const Login = () => {
             className=" w-full mb-5 bg-gray-100"
             required
           />
+          {err && (
+            <p className=" text-left mb-5 text-red-500 font-bold capitalize">
+              {err} !!!
+            </p>
+          )}
           <button name="add" className=" bg-black text-white w-full py-1">
             Add
           </button>

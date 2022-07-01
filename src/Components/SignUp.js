@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const [err, setErr] = useState("");
   const navigate = useNavigate();
 
   const handleForm = (event) => {
@@ -10,7 +11,6 @@ const SignUp = () => {
     const name = event.target.name.value;
     const email = event.target.email.value;
     const pass = event.target.pass.value;
-    console.log(name, email, pass);
     const data = { name, email, pass };
 
     fetch(`http://localhost:5000/registration`, {
@@ -22,12 +22,13 @@ const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.success === true) {
           event.target.reset();
           localStorage.setItem("accessToken", data.accessToken);
           navigate("/billing");
         } else {
-          // handle error
+          setErr(data.message);
         }
       });
   };
@@ -57,6 +58,11 @@ const SignUp = () => {
             className=" w-full mb-5 bg-gray-100"
             required
           />
+          {err && (
+            <p className=" text-left mb-5 text-red-500 font-bold capitalize">
+              {err} !!!
+            </p>
+          )}
           <button name="add" className=" bg-black text-white w-full py-1">
             SignUp
           </button>
