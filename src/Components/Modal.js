@@ -10,10 +10,14 @@ const Modal = ({
   const [name, setName] = useState(updateData?.name || "");
   const [email, setEmail] = useState(updateData?.email || "");
   const [phone, setPhone] = useState(updateData?.phone || "");
+  const [phErr, setPhErr] = useState(false);
   const [bill, setBill] = useState(updateData?.bill || "");
 
   const handleForm = (event) => {
     event.preventDefault();
+    if (phone.length !== 11) {
+      return setPhErr(true);
+    }
 
     if (event.target?.add?.innerHTML === "Add") {
       const data = { name, email, phone, bill };
@@ -84,6 +88,7 @@ const Modal = ({
             defaultValue={updateData?.name || ""}
             onChange={(event) => setName(event.target.value)}
             className=" w-full mb-5"
+            autoComplete="none"
             required
           />
           <input
@@ -93,6 +98,7 @@ const Modal = ({
             defaultValue={updateData?.email || ""}
             onChange={(event) => setEmail(event.target.value)}
             className=" w-full mb-5"
+            autoComplete="none"
             required
           />
           <div className=" grid grid-cols-2 gap-5 ">
@@ -102,7 +108,8 @@ const Modal = ({
               placeholder=" Phone"
               defaultValue={updateData?.phone || ""}
               onChange={(event) => setPhone(event.target.value)}
-              className=" w-full mb-5"
+              className=" w-full"
+              autoComplete="none"
               required
             />
             <input
@@ -111,16 +118,28 @@ const Modal = ({
               placeholder=" Bill Amount"
               defaultValue={updateData?.bill || ""}
               onChange={(event) => setBill(event.target.value)}
-              className=" w-full mb-5"
+              className=" w-full"
+              autoComplete="none"
               required
             />
           </div>
+          {phErr && (
+            <span className=" text-sm text-left block text-orange-50">
+              {"Phone number must be 11 characters"}
+            </span>
+          )}
           {updateData?._id ? (
-            <button name="update" className=" bg-black text-white w-full py-1">
+            <button
+              name="update"
+              className=" bg-black text-white w-full py-1 mt-5"
+            >
               Update
             </button>
           ) : (
-            <button name="add" className=" bg-black text-white w-full py-1">
+            <button
+              name="add"
+              className=" bg-black text-white w-full py-1 mt-5"
+            >
               Add
             </button>
           )}
