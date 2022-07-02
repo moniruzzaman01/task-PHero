@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 // import EditModal from "./EditModal";
 import Modal from "./Modal";
+import Loading from "./Loading";
 
 const BillingTable = ({
   modal,
@@ -42,7 +43,7 @@ const BillingTable = ({
       });
   };
   if (isLoading) {
-    return;
+    return <Loading />;
   }
 
   return (

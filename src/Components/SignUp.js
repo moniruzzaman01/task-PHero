@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Loading from "./Loading";
 
 const SignUp = () => {
   const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleForm = (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const name = event.target.name.value;
     const email = event.target.email.value;
@@ -22,7 +25,6 @@ const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success === true) {
           event.target.reset();
           localStorage.setItem("accessToken", data.accessToken);
@@ -30,10 +32,12 @@ const SignUp = () => {
         } else {
           setErr(data.message);
         }
+        setLoading(false);
       });
   };
   return (
     <div className=" min-h-[60vh] flex justify-center items-center ">
+      {loading && <Loading />}
       <div className=" w-full">
         <h2 className=" text-3xl mb-10 font-bold">SignUp</h2>
         <form onSubmit={handleForm} action="" className=" w-2/3 mx-auto">

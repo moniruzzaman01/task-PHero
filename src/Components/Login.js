@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from "./Loading";
 
 const Login = () => {
   const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleForm = (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const email = event.target.email.value;
     const pass = event.target.pass.value;
@@ -28,10 +31,12 @@ const Login = () => {
         } else {
           setErr(data.message);
         }
+        setLoading(false);
       });
   };
   return (
     <div className=" min-h-[60vh] flex justify-center items-center ">
+      {loading && <Loading />}
       <div className=" w-full">
         <h2 className=" text-3xl mb-10 font-bold">Login</h2>
         <form onSubmit={handleForm} action="" className=" w-2/3 mx-auto">

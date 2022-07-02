@@ -12,13 +12,14 @@ const Modal = ({
   const [phone, setPhone] = useState(updateData?.phone || "");
   const [phErr, setPhErr] = useState(false);
   const [bill, setBill] = useState(updateData?.bill || "");
+  const [loading, setLoading] = useState(false);
 
   const handleForm = (event) => {
     event.preventDefault();
     if (phone.length !== 11) {
       return setPhErr(true);
     }
-
+    setLoading(true);
     if (event.target?.add?.innerHTML === "Add") {
       const data = { name, email, phone, bill };
       fetch(`https://red-toque-40345.herokuapp.com/add-billing`, {
@@ -39,6 +40,7 @@ const Modal = ({
           } else {
             // handle error
           }
+          setLoading(false);
         });
     } else if (event.target?.update?.innerHTML === "Update") {
       const data = { name, email, phone, bill };
@@ -64,6 +66,7 @@ const Modal = ({
           } else {
             // handle error
           }
+          setLoading(false);
         });
     }
   };
@@ -140,7 +143,7 @@ const Modal = ({
               name="add"
               className=" bg-black text-white w-full py-1 mt-5"
             >
-              Add
+              {loading ? "loading..." : "Add"}
             </button>
           )}
         </form>
